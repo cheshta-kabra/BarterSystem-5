@@ -16,43 +16,47 @@ export default class SettingScreen extends Component{
   constructor(){
     super();
     this.state={
-      emailId:'',
-      firstName:'',
-      lastName:'',
-      address:'',
-      contact:'',
-      docId:'',
+      emailId   : '',
+      firstName : '',
+      lastName  : '',
+      address   : '',
+      contact   : '',
+      docId     : ''
     }
   }
 
   getUserDetails=()=>{
-    var user = firebase.auth().currentUser
-    var email= user.email
-    db.collection('Users').where('Email_ID','==',email).get()
-    .then((snapshot)=>{
-      snapshot.forEach((doc)=>{
-        var data=doc.data()
+    var email = firebase.auth().currentUser.email;
+    //console.log("email is "+email)
+    db.collection('users').where('email_id','==',email).get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+      var data = doc.data()
+      //console.log("first name "+data.first_name)
         this.setState({
-          emailId:data.Email_ID,
-          firstName:data.First_Name,
-          lastName:data.Last_Name,
-          contact:data.Contact,
-          address:data.Address,
-          docId:doc.id,
+          emailId   : data.email_id,
+          firstName : data.first_name,
+          lastName  : data.last_name,
+          address   : data.address,
+          contact   : data.contact,
+          docId     : doc.id
         })
-      })
+      });
     })
+    //console.log("first name is "+this.state.firstName)
   }
 
   updateUserDetails=()=>{
     db.collection('users').doc(this.state.docId)
     .update({
-      First_Name:this.state.firstName,
-      Last_Name:this.state.lastName,
-      Contact:this.state.contact,
-      Address:this.state.address,
+      "first_name": this.state.firstName,
+      "last_name" : this.state.lastName,
+      "address"   : this.state.address,
+      "contact"   : this.state.contact,
     })
-    Alert.alert('Profil updated successfully')
+
+    Alert.alert("Profile Updated Successfully")
+
   }
 
   componentDidMount(){
@@ -71,7 +75,7 @@ export default class SettingScreen extends Component{
               maxLength ={8}
               onChangeText={(text)=>{
                 this.setState({
-                  firstName:text
+                  firstName: text
                 })
               }}
               value ={this.state.firstName}
@@ -82,7 +86,7 @@ export default class SettingScreen extends Component{
               maxLength ={8}
               onChangeText={(text)=>{
                 this.setState({
-                  lastName:text
+                  lastName: text
                 })
               }}
                 value ={this.state.lastName}
@@ -94,7 +98,7 @@ export default class SettingScreen extends Component{
               keyboardType={'numeric'}
               onChangeText={(text)=>{
                 this.setState({
-                  contact:text
+                  contact: text
                 })
               }}
                 value ={this.state.contact}
@@ -105,7 +109,7 @@ export default class SettingScreen extends Component{
               multiline = {true}
               onChangeText={(text)=>{
                 this.setState({
-                  address:text
+                  address: text
                 })
               }}
                 value ={this.state.address}

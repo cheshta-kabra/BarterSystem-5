@@ -188,12 +188,13 @@ showModal = ()=>{
             this.showModal()
           }
         <View style={{justifyContent:'center', alignItems:'center'}}>
-          <Text style={styles.title}>Barter System</Text>
+          
+          <Text style={styles.title}>Book Santa</Text>
         </View>
         <View>
             <TextInput
             style={styles.loginBox}
-            placeholder="abc@gmail.com"
+            placeholder="abc@example.com"
             keyboardType ='email-address'
             onChangeText={(text)=>{
               this.setState({
